@@ -1,0 +1,95 @@
+# CREATE USERS
+
+from news.models import User
+
+User.objects.create_user('John')
+User.objects.create_user('Sara')
+
+# CREATE AUTHORS
+
+from news.models import Author
+
+Author.objects.create(user=User.objects.get(username='Sara'))
+Author.objects.create(user=User.objects.get(username='John'))
+
+# CREATE CATEGORIES
+
+from news.models import Category
+
+Category.objects.create(category_name = 'Sport')
+Category.objects.create(category_name = 'IT')
+Category.objects.create(category_name = 'Food')
+Category.objects.create(category_name = 'Science')
+
+# ADD ARTICLES AND NEWS
+
+from news.models import Post
+
+Post.objects.create(type='Ae', heading='Польза от спорта и здоровой еды', text='some text', author=Author.objects.get(id=2))
+Post.objects.create(type='Ae', heading='Взаимосвязь науки и IT', text='some text 2', author=Author.objects.get(id=2))
+Post.objects.create(type='Ns', heading='Новость: найден бесконечный источник энергии!', text='some text 3', author=Author.objects.get(id=1))
+
+# ADD CATEGORY
+
+from news.models import PostCategory
+
+PostCategory.objects.create(post=Post.objects.get(id=1), category=Category.objects.get(id=1))
+PostCategory.objects.create(post=Post.objects.get(id=1), category=Category.objects.get(id=3))
+PostCategory.objects.create(post=Post.objects.get(id=2), category=Category.objects.get(id=2))
+PostCategory.objects.create(post=Post.objects.get(id=2), category=Category.objects.get(id=4))
+PostCategory.objects.create(post=Post.objects.get(id=3), category=Category.objects.get(id=4))
+
+# ADD COMMENT
+
+from news.models import Comment
+
+Comment.objects.create(post=Post.objects.get(id=1), user=User.objects.get(id=2), text='Весьма полезный материал!')
+Comment.objects.create(post=Post.objects.get(id=2), user=User.objects.get(id=3), text='Средний материал')
+Comment.objects.create(post=Post.objects.get(id=3), user=User.objects.get(id=2), text='Ничего не понял!')
+Comment.objects.create(post=Post.objects.get(id=1), user=User.objects.get(id=3), text='Интересно!')
+
+# LIKE\DISLIKE
+
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=1).dislike()
+Post.objects.get(id=3).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=4).dislike()
+
+# UPDATE THE AUTHOR’S RATING
+
+Author.objects.get(id=1).update_rating()
+
+# DISPLAY USERNAME AND RATING OF THE BEST USER
+
+a1 = Author.objects.order_by('-rating')[:1]
+for i in a1:
+     i.rating
+     i.user.username
+
+# CREATED_AT, USERNAME, RATING, HEADER, PREVIEW OF THE BEST ARTICLE ON LIKE\DISLIKE
+
+p1 = Post.objects.order_by('-rating')[:1]
+
+for i in p1:
+    i.created_at
+    i.author.user.username
+    i.rating
+    i.heading
+    i.preview()
+
+# DISPLAY ALL COMMENTS (created_at, username, rating, text)
+
+c1 = Comment.objects.filter(post_id=3)
+
+for i in c1:
+    i.created_at
+    i.user.username
+    i.rating
+    i.text
+
