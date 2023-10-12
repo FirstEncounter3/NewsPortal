@@ -1,0 +1,35 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}
+Articles
+{% endblock title %}
+
+{% block content %}
+   <h1>Все статьи</h1>
+   <h3>{% current_time '%b %d %Y' %}</h3>
+   <hr>
+   {% if articles %}
+    <h3>Всего статей: {{ articles|length }}</h3>
+       <table>
+           <tr>
+               <td><strong>Заголовок</strong></td>
+               <td><strong>Дата публикации</strong></td>
+               <td><strong>Текст</strong></td>
+           </tr>
+
+           {% for article in articles %}
+           <tr>
+               <td><a href="{{ article.id }}">{{ article.heading|censor }}</a></td>
+               <td>{{ article.created_at|date:'d M Y' }}</td>
+               <td>{{ article.text|truncatewords:20|censor }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Статей нет!</h2>
+   {% endif %}
+{% endblock content %}
