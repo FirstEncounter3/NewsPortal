@@ -10,4 +10,12 @@ Article
 <h1>{{ article.heading|censor  }}</h1>
 <p>{{ article.created_at|date:'d M Y' }}</p>
 <p>{{ article.text|censor  }}</p>
+<a href="{% url 'articles_list' %}">К списку статей</a>
+   {% if article.type == 'Ns' %}
+        <a href="{% url 'news_delete' article.id %}">Удалить новость</a>
+        <a href="{% url 'news_edit' article.id %}">Редактировать новость</a>
+   {% elif article.type == 'Ae' %}
+        <a href="{% url 'article_delete' article.id %}">Удалить статью</a>
+        <a href="{% url 'article_edit' article.id %}">Редактировать статью</a>
+    {% endif %}
 {% endblock content %}

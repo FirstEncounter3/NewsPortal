@@ -24,16 +24,16 @@
        <div class="collapse navbar-collapse" id="navbarResponsive">
            <ul class="navbar-nav ml-auto">
                <li class="nav-item active">
-                   <a class="nav-link" href="#">Home</a>
+                   <a class="nav-link" href="{% url 'articles_list' %}">Home</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="#">About</a>
+                   <a class="nav-link" href="{% url 'articles_search' %}">Search</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="#">Contact</a>
+                   <a class="nav-link" href="{% url 'article_create' %}">Create article</a>
                </li>
-               <li class="nav-item">
-                   <a class="nav-link" href="#">Info</a>
+                <li class="nav-item">
+                   <a class="nav-link" href="{% url 'news_create' %}">Create news</a>
                </li>
            </ul>
        </div>

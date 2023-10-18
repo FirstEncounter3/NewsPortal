@@ -1,18 +1,22 @@
 {% extends 'flatpages/default.html' %}
-
 {% load custom_filters %}
 {% load custom_tags %}
 
 {% block title %}
-Articles
+Search
 {% endblock title %}
 
 {% block content %}
-   <h1>Все статьи</h1>
-   <h3>{% current_time '%b %d %Y' %}</h3>
+    <h1> Поиск </h1>
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
+   {% if search %}
+    <h3>Всего статей: {{ search|length }}</h3>
    <hr>
-   {% if articles %}
-    <h3>Всего статей: {{ articles|length }}</h3>
        <table>
            <tr>
                <td><strong>Заголовок</strong></td>
@@ -21,7 +25,7 @@ Articles
                <td><strong>Вид</strong></td>
            </tr>
 
-           {% for article in articles %}
+           {% for article in search %}
            <tr>
                <td><a href="{% url 'article_detail' article.id %}">{{ article.heading|censor }}</a></td>
                <td>{{ article.created_at|date:'d M Y' }}</td>
@@ -35,8 +39,7 @@ Articles
            {% endfor %}
 
        </table>
-   {% if page_obj.has_previous %}
-       {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+      {% if page_obj.has_previous %}
        <a href="?{% url_replace page=1 %}">1</a>
        {% if page_obj.previous_page_number != 1 %}
            ...
@@ -54,6 +57,6 @@ Articles
        {% endif %}
    {% endif %}
    {% else %}
-       <h2>Статей нет!</h2>
+       <h2>При таких фильтрах статей не нашлось. Попробуйте применить менее строгие фильтры</h2>
    {% endif %}
 {% endblock content %}
