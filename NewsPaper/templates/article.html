@@ -12,10 +12,18 @@ Article
 <p>{{ article.text|censor  }}</p>
 <a href="{% url 'articles_list' %}">К списку статей</a>
    {% if article.type == 'Ns' %}
-        <a href="{% url 'news_delete' article.id %}">Удалить новость</a>
-        <a href="{% url 'news_edit' article.id %}">Редактировать новость</a>
+        {% if perms.news.delete_post %}
+            <a href="{% url 'news_delete' article.id %}">Удалить новость</a>
+        {% endif %}
+        {% if perms.news.change_post %}
+            <a href="{% url 'news_edit' article.id %}">Редактировать новость</a>
+        {% endif %}
    {% elif article.type == 'Ae' %}
-        <a href="{% url 'article_delete' article.id %}">Удалить статью</a>
-        <a href="{% url 'article_edit' article.id %}">Редактировать статью</a>
+        {% if perms.news.delete_post %}
+            <a href="{% url 'article_delete' article.id %}">Удалить статью</a>
+        {% endif %}
+        {% if perms.news.change_post %}
+            <a href="{% url 'article_edit' article.id %}">Редактировать статью</a>
+        {% endif %}
     {% endif %}
 {% endblock content %}

@@ -19,6 +19,9 @@ Articles
                <td><strong>Дата публикации</strong></td>
                <td><strong>Текст</strong></td>
                <td><strong>Вид</strong></td>
+               {% if perms.news.change_post or perms.news.add_post %}
+                        <td><strong>Действия</strong></td>
+                {% endif %}
            </tr>
 
            {% for article in articles %}
@@ -31,6 +34,24 @@ Articles
                {% elif article.type == 'Ae' %}
                <td>Статья</td>
                {% endif %}
+               <td>
+                   {% if article.type == 'Ns' %}
+                        {% if perms.news.change_post %}
+                            <a href="{% url 'news_edit' article.id %}">Редактировать новость</a>
+                        {% endif %}
+                        {% if perms.news.delete_post %}
+                            <a href="{% url 'news_delete' article.id %}">Удалить новость</a>
+                        {% endif %}
+                   {% endif %}
+                   {% if article.type == 'Ae'%}
+                        {% if perms.news.change_post %}
+                            <a href="{% url 'article_edit' article.id %}">Редактировать статью</a>
+                        {% endif %}
+                        {% if perms.news.delete_post %}
+                            <a href="{% url 'article_delete' article.id %}">Удалить статью</a>
+                        {% endif %}
+                   {% endif %}
+               </td>
            </tr>
            {% endfor %}
 
