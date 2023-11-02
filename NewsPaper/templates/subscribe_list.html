@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Subscription
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+    {% if category %}
+    {% for cat in category %}
+        <p>
+            <a href="{% url 'category_list' cat.id %}">{{ cat }}</a>
+            <br>
+            <a href="{% url 'unsubscribe' cat.id %}">Отписаться</a>
+        </p>
+    {% endfor %}
+    {% else %}
+    <h1>У вас пока нет подписок!</h1>
+    {% endif %}
+    <p><a href="{% url 'articles_list' %}">К списку статей</a></p>
+{% endblock content %}

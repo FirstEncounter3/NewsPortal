@@ -1,0 +1,10 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Subscription
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ message }} {{ category }}</h1>
+    <p><a href="{% url 'articles_list' %}">К списку статей</a></p>
+{% endblock content %}

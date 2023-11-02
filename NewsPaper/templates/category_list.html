@@ -12,10 +12,12 @@ Articles
    <h3>{% current_time '%b %d %Y' %}</h3>
    <hr>
     {% if is_not_subscriber %}
-    <p>Тут будет кнопка</p>
+        <p><a href="{% url 'subscribe' category.id %}">Подписаться</a></p>
+    {% else %}
+        <p><a href="{% url 'unsubscribe' category.id %}">Отписаться</a></p>
     {% endif %}
-   {% if articles %}
-    <h3>Всего статей: {{ articles|length }}</h3>
+   {% if category_list %}
+    <h3>Всего статей: {{ category_list|length }}</h3>
        <table>
            <tr>
                <td><strong>Заголовок</strong></td>
@@ -28,7 +30,7 @@ Articles
                <td><strong>Категория</strong></td>
            </tr>
 
-           {% for article in articles %}
+           {% for article in category_list %}
            <tr>
                <td><a href="{% url 'article_detail' article.id %}">{{ article.heading|censor }}</a></td>
                <td>{{ article.created_at|date:'d M Y' }}</td>
@@ -82,6 +84,7 @@ Articles
            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
        {% endif %}
    {% endif %}
+    <p><a href="{% url 'articles_list' %}">Ко всем категориям</a></p>
    {% else %}
        <h2>Статей нет!</h2>
    {% endif %}
