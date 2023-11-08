@@ -1,8 +1,6 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from django.db.models import Exists, OuterRef
 from django.shortcuts import render, get_object_or_404
-from django.views.decorators.csrf import csrf_protect
 
 from django.views.generic import (
     ListView,

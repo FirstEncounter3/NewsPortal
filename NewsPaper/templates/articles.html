@@ -11,9 +11,6 @@ Articles
    <h1>Все статьи</h1>
    <h3>{% current_time '%b %d %Y' %}</h3>
    <hr>
-    {% if is_not_subscriber %}
-    <p>Тут будет кнопка</p>
-    {% endif %}
    {% if articles %}
     <h3>Всего статей: {{ articles|length }}</h3>
        <table>

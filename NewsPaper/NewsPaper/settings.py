@@ -155,3 +155,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+# CELERY SETTINGS
+
+CELERY_BROKER_URL = 'YOUR REDIS URL - redis://login:pass@endpoint:port'
+CELERY_RESULT_BACKEND = 'YOUR REDIS URL - redis://login:pass@endpoint:port'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
