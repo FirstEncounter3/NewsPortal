@@ -16,6 +16,8 @@ from .models import (
 from .filters import PostFilter
 from .forms import NewsForm
 
+from django.core.cache import cache
+
 
 class ArticlesList(ListView):
     model = Post
@@ -29,6 +31,14 @@ class ArticleDetail(DetailView):
     model = Post
     template_name = 'article.html'
     context_object_name = 'article'
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+            return obj
 
 
 class ArticlesSearch(ListView):

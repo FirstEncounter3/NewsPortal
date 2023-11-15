@@ -14,10 +14,11 @@ from .views import (
     unsubscribe,
     subscribe_list,
 )
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
-    path('', ArticlesList.as_view(), name='articles_list'),
-    path('<int:pk>', ArticleDetail.as_view(), name='article_detail'),
+    path('', cache_page(1)(ArticlesList.as_view()), name='articles_list'),
+    path('<int:pk>', cache_page(60*5)(ArticleDetail.as_view()), name='article_detail'),
     path('search/', ArticlesSearch.as_view(), name='articles_search'),
     path('news/create/', NewsCreate.as_view(), name='news_create'),
     path('news/<int:pk>/edit/', NewsEdit.as_view(), name='news_edit'),

@@ -2,10 +2,13 @@
 
 {% load custom_filters %}
 {% load custom_tags %}
+{% load cache %}
 
 {% block title %}
 Articles
 {% endblock title %}
+
+{% cache 30 content %} # кэш
 
 {% block content %}
    <h1>Все статьи</h1>
@@ -83,3 +86,4 @@ Articles
        <h2>Статей нет!</h2>
    {% endif %}
 {% endblock content %}
+{% endcache %} # кэш
