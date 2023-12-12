@@ -53,7 +53,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.heading}, Автор: {self.author}, Вид: {self.type}'
+        return f'{self.heading}'
 
     def like(self):
         self.rating += 1
@@ -99,16 +99,3 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
-
-
-# class Subscriber(models.Model):
-#     user = models.ForeignKey(
-#         to=User,
-#         on_delete=models.CASCADE,
-#         related_name='subscriber',
-#     )
-#     category = models.ForeignKey(
-#         to='Category',
-#         on_delete=models.CASCADE,
-#         related_name='subscriber',
-#     )
