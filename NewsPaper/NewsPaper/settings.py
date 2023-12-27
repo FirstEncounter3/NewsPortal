@@ -53,6 +53,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -177,7 +180,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['stdout_debug', 'stdout_warning', 'stdout_error_&_critical', 'general'],
-            'level': 'DEBUG',
+            'level': 'INFO', # изменили на момент D14
         },
         'django.request': {
             'handlers': ['errors', 'mail'],
@@ -285,3 +288,7 @@ LOGGING = {
         },
     },
 }
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
